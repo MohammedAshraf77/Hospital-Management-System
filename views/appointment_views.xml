@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Tree View for Hospital Appointment -->
+    <record id="view_tree_hospital_appointment" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Appointment">
+                <field name="patient_id"/>
+                <field name="date_appointment"/>
+                <field name="note"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Hospital Appointment -->
+    <record id="view_form_hospital_appointment" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Appointment">
+
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            invisible="state != 'draft'" class="oe_highlight"/>
+<!--                    <button name="action_draft" type="object" string="Draft"/>-->
+                    <button name="action_ongoing" type="object" string="Ongoing"
+                            invisible="state != 'confirmed'" class="oe_highlight"/>
+                    <button name="action_done" type="object" string="Done"
+                       invisible="state != 'ongoing'" class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                    invisible="state == 'done'" class="oe_highlight"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,ongoing,done"/>
+
+
+                </header>
+
+                <sheet>
+
+
+                    <div class="oe_title">
+                        <label for="patient_id"/>
+                        <h1>
+                            <field name="patient_id"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="date_appointment"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="appointment_lines" string="Lines">
+                               <field name="appointment_line_ids">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="qty"/>
+
+                        </tree>
+                        <form>
+                            <sheet>
+                                <group>
+                              <field name="product_id"/>
+                            <field name="qty"/>
+
+                                </group>
+
+                            </sheet>
+                        </form>
+                    </field>
+
+                        </page>
+                        <page name="other_info" string="Other_Info">
+                            <group>
+                                <field name="note"/>
+<!--                                lazem a3rf el field inside group 3shan t2rah -->
+                            </group>
+                        </page>
+
+                    </notebook>
+
+
+                </sheet>
+
+                <!-- Add Chatter here -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Hospital Appointment -->
+    <record id="action_hospital_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new appointment
+            </p>
+        </field>
+    </record>
+</odoo>

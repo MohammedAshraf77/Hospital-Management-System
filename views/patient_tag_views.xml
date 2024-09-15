@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_tree_patient_tag" model="ir.ui.view">
+        <field name="name">patient.tag.tree</field>
+        <field name="model">patient.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Patients Tags" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="ref"/>
+                <field name="date_of_birth"/>
+                <field name="gender"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_patient_tag" model="ir.actions.act_window">
+        <field name="name">Patients Tags</field>
+        <field name="res_model">patient.tag</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_tree_patient_tag"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new patient tag
+            </p>
+        </field>
+    </record>
+</odoo>
