@@ -1,0 +1,63 @@
+<odoo>
+    <record id="patient_report" model="ir.actions.report">
+        <field name="name">Patient Report</field>
+        <field name="model">hospital.patient</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_hospital_patient"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">hospital_app.patient_report_template</field>
+    </record>
+
+    <template id="patient_report_template">
+        <t t-call="web.html_container">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <h1>
+                    Patient Report <t t-esc="o.name"/>
+                </h1>
+                <style>
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+                        th, td {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                            text-align: center; /* لجعل النص في منتصف الخلية */
+                        }
+                        th {
+                            background-color: #f2f2f2;
+                            font-weight: bold;
+                        }
+                        thead th {
+                            text-align: center;
+                        }
+                        tbody tr:nth-child(even) {
+                            background-color: #f9f9f9;
+                        }
+                    </style>
+                <table>
+                    <theda>
+                        <th colspan="4">General Info</th>
+                    </theda>
+                    <tbody>
+                        <td>Name</td>
+                        <td><t t-esc="o.name"/></td>
+                        <td>Gender</td>
+                        <td><t t-esc="o.gender"/></td>
+                    </tbody>
+                    <theda>
+                        <th colspan="4">Additional Info</th>
+                    </theda>
+                    <tbody>
+                        <td>DOB</td>
+                        <td><t t-esc="o.date_of_birth"/></td>
+                        <td>Selling Price</td>
+                        <td><t t-esc="o.selling_price"/></td>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+        </t>
+    </template>
+</odoo>
